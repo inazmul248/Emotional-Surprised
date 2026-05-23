@@ -1,0 +1,927 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0f1428 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.main-container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(26, 26, 62, 0.95));
+    z-index: -2;
+}
+
+/* Stars Background */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.stars-container::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    box-shadow: 
+        100px 200px white, 200px 50px white, 300px 300px white,
+        400px 100px white, 500px 250px white, 600px 150px white,
+        700px 300px white, 800px 50px white, 900px 200px white,
+        1000px 300px white, 1100px 150px white, 1200px 250px white;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Music Control */
+.music-control {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff1744, #d32f2f);
+    border: 3px solid #ffd700;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-control:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+}
+
+.music-control:active {
+    transform: scale(0.95);
+}
+
+.music-icon {
+    display: block;
+    animation: musicBounce 0.6s ease-in-out infinite;
+}
+
+@keyframes musicBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Scenes Wrapper */
+.scenes-wrapper {
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+/* Scene */
+.scene {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    animation: fadeIn 0.8s ease-out;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.scene.hidden {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* SCENE 1: INTRO */
+.intro-content {
+    text-align: center;
+    animation: slideUp 1s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-title {
+    margin-bottom: 50px;
+}
+
+.intro-title h1 {
+    font-size: 4.5rem;
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+    margin-bottom: 15px;
+    font-weight: 300;
+    letter-spacing: 4px;
+}
+
+.intro-title p {
+    font-size: 1.5rem;
+    color: #ff1744;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+.intro-hearts {
+    font-size: 5rem;
+    margin: 40px 0;
+    animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.intro-subtitle {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 30px;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 35px;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #ff1744, #d32f2f);
+    color: white;
+    border: 2px solid #ffd700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    box-shadow: 0 5px 20px rgba(255, 23, 68, 0.3);
+    margin: 8px;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+    background: linear-gradient(135deg, #ff5252, #ff1744);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-large {
+    padding: 15px 50px;
+    font-size: 1.1rem;
+}
+
+.btn-skip {
+    background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+    border-color: #ce93d8;
+}
+
+.btn-skip:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ab47bc, #9c27b0);
+    box-shadow: 0 10px 30px rgba(206, 147, 216, 0.5);
+}
+
+.btn-end {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    border-color: #81c784;
+}
+
+.btn-end:hover:not(:disabled) {
+    background: linear-gradient(135deg, #66bb6a, #4caf50);
+    box-shadow: 0 10px 30px rgba(129, 199, 132, 0.5);
+}
+
+/* Scene Header */
+.scene-header {
+    text-align: center;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.scene-header h2 {
+    font-size: 2.5rem;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+/* Stage */
+.stage {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 80px;
+    width: 100%;
+    max-width: 900px;
+    margin: 40px 0;
+    min-height: 300px;
+    position: relative;
+}
+
+/* Character */
+.character {
+    width: 120px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: characterAppear 0.8s ease-out;
+}
+
+@keyframes characterAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Head */
+.head {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #f4a460, #daa520);
+    border-radius: 50%;
+    position: relative;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(244, 164, 96, 0.3);
+}
+
+/* Eyes */
+.eyes {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.eye {
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+}
+
+/* Mouths */
+.mouth {
+    position: absolute;
+    bottom: 15px;
+    width: 25px;
+    height: 10px;
+    border: 2px solid #333;
+    border-top: none;
+}
+
+.sad-mouth {
+    border-radius: 0 0 20px 20px;
+}
+
+.angry-mouth {
+    border-radius: 20px 20px 0 0;
+    transform: rotateZ(180deg);
+}
+
+.happy-mouth {
+    border-radius: 0 0 20px 20px;
+    border-color: #333;
+}
+
+/* Body */
+.body {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.male .body {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+}
+
+.female .body {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+}
+
+/* Arms */
+.arms {
+    position: absolute;
+    top: 85px;
+    left: -20px;
+    width: 160px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.arm {
+    width: 15px;
+    height: 50px;
+    background: linear-gradient(135deg, #f4a460, #daa520);
+    border-radius: 10px;
+    transform-origin: top center;
+}
+
+.character:not(.slappable) .arm.left {
+    animation: armSwingLeft 1s ease-in-out infinite;
+}
+
+.character:not(.slappable) .arm.right {
+    animation: armSwingRight 1s ease-in-out infinite;
+}
+
+@keyframes armSwingLeft {
+    0%, 100% { transform: rotate(15deg); }
+    50% { transform: rotate(-15deg); }
+}
+
+@keyframes armSwingRight {
+    0%, 100% { transform: rotate(-15deg); }
+    50% { transform: rotate(15deg); }
+}
+
+/* Slapping arm animation */
+.arm.slapping {
+    animation: slapAttack 0.4s ease !important;
+}
+
+@keyframes slapAttack {
+    0% { transform: rotate(-30deg); }
+    50% { transform: rotate(60deg); }
+    100% { transform: rotate(-30deg); }
+}
+
+/* Legs */
+.legs {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.leg {
+    width: 12px;
+    height: 50px;
+    background: #333;
+    border-radius: 6px;
+    transform-origin: top center;
+}
+
+.character:not(.running):not(.chasing) .leg {
+    animation: legSway 1.2s ease-in-out infinite;
+}
+
+@keyframes legSway {
+    0%, 100% { transform: rotateZ(0deg); }
+    50% { transform: rotateZ(5deg); }
+}
+
+/* Running animation */
+.character.running {
+    animation: runningMotion 0.8s linear infinite;
+}
+
+@keyframes runningMotion {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(40px); }
+}
+
+.character.running .leg {
+    animation: legRun 0.4s ease-in-out infinite;
+}
+
+@keyframes legRun {
+    0%, 100% { transform: rotateZ(0deg); }
+    25% { transform: rotateZ(25deg); }
+    75% { transform: rotateZ(-25deg); }
+}
+
+/* Chasing animation */
+.character.chasing {
+    animation: chasingMotion 0.8s linear infinite;
+}
+
+@keyframes chasingMotion {
+    0%, 100% { transform: translateX(0) scaleX(-1); }
+    50% { transform: translateX(-40px) scaleX(-1); }
+}
+
+.character.chasing .leg {
+    animation: legRun 0.4s ease-in-out infinite;
+}
+
+/* Happy jump animation */
+.character.happy {
+    animation: jumpHappy 1s ease-in-out infinite;
+}
+
+@keyframes jumpHappy {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+/* Slappable */
+.slappable {
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.slappable:hover {
+    transform: scale(1.05);
+}
+
+.slappable.hit {
+    animation: getHit 0.3s ease;
+}
+
+@keyframes getHit {
+    0% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-20px) rotate(-5deg); }
+    50% { transform: translateX(20px) rotate(5deg); }
+    75% { transform: translateX(-15px) rotate(-3deg); }
+    100% { transform: translateX(0) rotate(0deg); }
+}
+
+/* Emotion Icon */
+.emotion-icon {
+    position: absolute;
+    top: -40px;
+    right: -20px;
+    font-size: 2.5rem;
+    animation: emotionFloat 1s ease-in-out infinite;
+}
+
+@keyframes emotionFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* SCENE 2: APOLOGY */
+.speech-bubble {
+    background: rgba(255, 215, 0, 0.1);
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    padding: 25px;
+    max-width: 700px;
+    width: 100%;
+    margin: 30px 0;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bubbleFloat 1.5s ease-in-out infinite;
+}
+
+@keyframes bubbleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+#speech-text {
+    color: #ffd700;
+    font-size: 1.3rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Story Box */
+.story-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #ff1744;
+    padding: 30px;
+    max-width: 800px;
+    width: 100%;
+    margin: 30px 0;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+#story-content {
+    color: #d0d0d0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.progress {
+    color: #ffd700;
+    font-weight: bold;
+    padding: 0 15px;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 30px 0;
+    width: 100%;
+}
+
+/* SCENE 3: SLAP GAME */
+.slap-game {
+    width: 100%;
+    max-width: 900px;
+}
+
+.anger-section {
+    margin-bottom: 40px;
+}
+
+.anger-label {
+    display: flex;
+    justify-content: space-between;
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.anger-bar {
+    width: 100%;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ff1744;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.anger-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff1744, #d32f2f);
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+.slap-stage {
+    gap: 120px;
+    min-height: 350px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 15px;
+    padding: 40px 20px;
+    margin: 40px 0;
+}
+
+.slap-message {
+    text-align: center;
+    color: #ff1744;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 20px 0;
+    min-height: 30px;
+    animation: messageSlide 0.4s ease;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slap-instruction {
+    text-align: center;
+    color: #ffd700;
+    font-size: 1.2rem;
+    margin: 15px 0;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* SCENE 4: CHASE */
+.chase-section {
+    width: 100%;
+    max-width: 900px;
+}
+
+.chase-stage {
+    gap: 150px;
+    position: relative;
+    margin: 60px 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 15px;
+    padding: 40px 20px;
+}
+
+.chase-stage::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+}
+
+/* Rain effect */
+.rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.rain::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 0,
+        rgba(255, 255, 255, 0.1) 2px,
+        transparent 2px,
+        transparent 10px
+    );
+    animation: rainFall 0.5s linear infinite;
+}
+
+@keyframes rainFall {
+    to {
+        transform: translateY(10px);
+    }
+}
+
+.chase-message {
+    text-align: center;
+    color: #ff1744;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+/* SCENE 5: ACCEPTANCE */
+.acceptance-section {
+    width: 100%;
+    max-width: 900px;
+}
+
+.acceptance-stage {
+    gap: 100px;
+    min-height: 350px;
+    position: relative;
+    margin: 50px 0;
+    background: rgba(255, 215, 0, 0.05);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 15px;
+    padding: 40px 20px;
+}
+
+/* Hearts falling */
+.hearts-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.heart-fall {
+    position: absolute;
+    font-size: 2rem;
+    animation: heartFall 4s ease-in infinite;
+}
+
+@keyframes heartFall {
+    to {
+        transform: translateY(400px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.acceptance-message {
+    text-align: center;
+    margin: 40px 0;
+    padding: 30px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 15px;
+    border: 2px solid #ffd700;
+}
+
+.acceptance-message p {
+    color: #ffd700;
+    font-size: 1.4rem;
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+.acceptance-message .highlight {
+    color: #ff1744;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.final-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .intro-title h1 {
+        font-size: 3rem;
+    }
+
+    .character {
+        width: 100px;
+        height: 150px;
+    }
+
+    .head {
+        width: 60px;
+        height: 60px;
+    }
+
+    .stage {
+        gap: 50px;
+        min-height: 250px;
+    }
+
+    .slap-stage {
+        gap: 80px;
+    }
+
+    .chase-stage {
+        gap: 120px;
+    }
+
+    .acceptance-stage {
+        gap: 70px;
+    }
+
+    .btn {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+
+    .btn-large {
+        padding: 12px 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scene {
+        padding: 20px 15px;
+    }
+
+    .intro-title h1 {
+        font-size: 2.2rem;
+    }
+
+    .intro-hearts {
+        font-size: 3rem;
+        margin: 30px 0;
+    }
+
+    .character {
+        width: 80px;
+        height: 120px;
+    }
+
+    .head {
+        width: 50px;
+        height: 50px;
+    }
+
+    .stage {
+        gap: 30px;
+        min-height: 200px;
+        padding: 20px 10px;
+    }
+
+    .slap-stage {
+        gap: 40px;
+        min-height: 250px;
+    }
+
+    .acceptance-stage {
+        gap: 40px;
+    }
+
+    .btn {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+        margin: 5px;
+    }
+
+    #speech-text {
+        font-size: 1.1rem;
+    }
+
+    .acceptance-message p {
+        font-size: 1.1rem;
+    }
+
+    .music-control {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        bottom: 30px;
+        right: 30px;
+    }
+}
