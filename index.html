@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Apology - Interactive Animated Story</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Audio for background music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://aac.saavncdn.com/211/9d2c7a9b1e0e8c7f5d3b2a1c0e7f5d3b_320.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Sound effects -->
+    <audio id="slapSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj==" type="audio/wav">
+    </audio>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Background Animation -->
+        <div class="background"></div>
+        <div class="stars-container"></div>
+
+        <!-- Music Control Button -->
+        <button class="music-control" id="musicControl" title="Toggle Music">
+            <span class="music-icon">🎵</span>
+        </button>
+
+        <!-- Scene Container -->
+        <div class="scenes-wrapper">
+
+            <!-- SCENE 1: INTRO SCREEN -->
+            <div class="scene" id="scene-intro" data-scene="1">
+                <div class="intro-content">
+                    <div class="intro-title">
+                        <h1>The Apology</h1>
+                        <p>An Interactive Love Story</p>
+                    </div>
+                    <div class="intro-hearts">
+                        <span>💔</span>
+                    </div>
+                    <button class="btn btn-large" onclick="goToScene(2)">
+                        Start The Story
+                    </button>
+                    <p class="intro-subtitle">Click to begin...</p>
+                </div>
+            </div>
+
+            <!-- SCENE 2: HIS APOLOGY -->
+            <div class="scene hidden" id="scene-apology" data-scene="2">
+                <div class="scene-header">
+                    <h2>His Sincere Words</h2>
+                </div>
+
+                <div class="stage">
+                    <!-- Male Character -->
+                    <div class="character male" id="char-male">
+                        <div class="head">
+                            <div class="eyes">
+                                <div class="eye"></div>
+                                <div class="eye"></div>
+                            </div>
+                            <div class="mouth sad-mouth"></div>
+                        </div>
+                        <div class="body"></div>
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                        <div class="legs">
+                            <div class="leg left"></div>
+                            <div class="leg right"></div>
+                        </div>
+                        <div class="emotion-icon" id="emotion-male">😢</div>
+                    </div>
+
+                    <!-- Female Character -->
+                    <div class="character female" id="char-female">
+                        <div class="head">
+                            <div class="eyes">
+                                <div class="eye"></div>
+                                <div class="eye"></div>
+                            </div>
+                            <div class="mouth angry-mouth"></div>
+                        </div>
+                        <div class="body"></div>
+                        <div class="arms">
+                            <div class="arm left"></div>
+                            <div class="arm right"></div>
+                        </div>
+                        <div class="legs">
+                            <div class="leg left"></div>
+                            <div class="leg right"></div>
+                        </div>
+                        <div class="emotion-icon" id="emotion-female">😠</div>
+                    </div>
+                </div>
+
+                <!-- Speech Bubble -->
+                <div class="speech-bubble">
+                    <p id="speech-text"></p>
+                </div>
+
+                <!-- Story Text -->
+                <div class="story-box">
+                    <div id="story-content"></div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <button class="btn" id="btn-prev" onclick="prevSpeech()" disabled>← Previous</button>
+                    <span class="progress" id="progress"></span>
+                    <button class="btn" id="btn-next" onclick="nextSpeech()">Next →</button>
+                    <button class="btn btn-skip" onclick="goToScene(3)">Skip to Slap</button>
+                </div>
+            </div>
+
+            <!-- SCENE 3: SLAP GAME -->
+            <div class="scene hidden" id="scene-slap" data-scene="3">
+                <div class="scene-header">
+                    <h2>Let Her Release Her Anger!</h2>
+                </div>
+
+                <div class="slap-game">
+                    <!-- Anger Meter -->
+                    <div class="anger-section">
+                        <div class="anger-label">
+                            <span>Her Anger Level</span>
+                            <span class="anger-value" id="anger-value">100%</span>
+                        </div>
+                        <div class="anger-bar">
+                            <div class="anger-fill" id="anger-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Characters for slapping -->
+                    <div class="stage slap-stage">
+                        <!-- Male Character (clickable) -->
+                        <div class="character male slappable" id="char-slap-male" onclick="getSlapped()">
+                            <div class="head">
+                                <div class="eyes">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                                <div class="mouth sad-mouth"></div>
+                            </div>
+                            <div class="body"></div>
+                            <div class="arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                            <div class="legs">
+                                <div class="leg left"></div>
+                                <div class="leg right"></div>
+                            </div>
+                        </div>
+
+                        <!-- Female Character (attacking) -->
+                        <div class="character female attacking" id="char-slap-female">
+                            <div class="head">
+                                <div class="eyes">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                                <div class="mouth angry-mouth"></div>
+                            </div>
+                            <div class="body"></div>
+                            <div class="arms">
+                                <div class="arm left slapping"></div>
+                                <div class="arm right"></div>
+                            </div>
+                            <div class="legs">
+                                <div class="leg left"></div>
+                                <div class="leg right"></div>
+                            </div>
+                            <div class="emotion-icon">😠</div>
+                        </div>
+                    </div>
+
+                    <!-- Slap Messages -->
+                    <div class="slap-message" id="slap-message"></div>
+                    <p class="slap-instruction">👆 CLICK on him to let her slap!</p>
+
+                    <!-- Continue Button -->
+                    <button class="btn btn-large" id="btn-continue-slap" onclick="goToScene(4)" disabled>
+                        Continue to Next Scene →
+                    </button>
+                </div>
+            </div>
+
+            <!-- SCENE 4: CHASE SCENE -->
+            <div class="scene hidden" id="scene-chase" data-scene="4">
+                <div class="scene-header">
+                    <h2>He Runs, She Chases</h2>
+                </div>
+
+                <div class="chase-section">
+                    <div class="stage chase-stage">
+                        <!-- Male Running -->
+                        <div class="character male running" id="char-run-male">
+                            <div class="head">
+                                <div class="eyes">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                                <div class="mouth sad-mouth"></div>
+                            </div>
+                            <div class="body"></div>
+                            <div class="arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                            <div class="legs">
+                                <div class="leg left"></div>
+                                <div class="leg right"></div>
+                            </div>
+                        </div>
+
+                        <!-- Female Chasing -->
+                        <div class="character female chasing" id="char-chase-female">
+                            <div class="head">
+                                <div class="eyes">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                                <div class="mouth angry-mouth"></div>
+                            </div>
+                            <div class="body"></div>
+                            <div class="arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                            <div class="legs">
+                                <div class="leg left"></div>
+                                <div class="leg right"></div>
+                            </div>
+                        </div>
+
+                        <!-- Rain effect -->
+                        <div class="rain"></div>
+                    </div>
+
+                    <p class="chase-message" id="chase-message">She's getting tired... maybe she's calming down?</p>
+
+                    <button class="btn btn-large" onclick="goToScene(5)">
+                        See What Happens Next →
+                    </button>
+                </div>
+            </div>
+
+            <!-- SCENE 5: ACCEPTANCE -->
+            <div class="scene hidden" id="scene-acceptance" data-scene="5">
+                <div class="scene-header">
+                    <h2>She Accepts His Apology</h2>
+                </div>
+
+                <div class="acceptance-section">
+                    <div class="stage acceptance-stage">
+                        <!-- Hearts falling -->
+                        <div class="hearts-container" id="hearts-container"></div>
+
+                        <!-- Male Happy -->
+                        <div class="character male happy" id="char-accept-male">
+                            <div class="head">
+                                <div class="eyes">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                                <div class="mouth happy-mouth"></div>
+                            </div>
+                            <div class="body"></div>
+                            <div class="arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                            <div class="legs">
+                                <div class="leg left"></div>
+                                <div class="leg right"></div>
+                            </div>
+                            <div class="emotion-icon">😊</div>
+                        </div>
+
+                        <!-- Female Happy -->
+                        <div class="character female happy" id="char-accept-female">
+                            <div class="head">
+                                <div class="eyes">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
+                                </div>
+                                <div class="mouth happy-mouth"></div>
+                            </div>
+                            <div class="body"></div>
+                            <div class="arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                            <div class="legs">
+                                <div class="leg left"></div>
+                                <div class="leg right"></div>
+                            </div>
+                            <div class="emotion-icon">😊</div>
+                        </div>
+                    </div>
+
+                    <div class="acceptance-message">
+                        <p>"I forgive you..."</p>
+                        <p>"But don't hurt me again."</p>
+                        <p class="highlight">💕 They finally understand each other 💕</p>
+                    </div>
+
+                    <div class="final-buttons">
+                        <button class="btn btn-large" onclick="goToScene(1)">
+                            Start Over
+                        </button>
+                        <button class="btn btn-large btn-end" onclick="endStory()">
+                            The End 🎬
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
